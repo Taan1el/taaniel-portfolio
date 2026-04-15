@@ -51,6 +51,14 @@ window.PORTFOLIO_CONTENT = {
         et: "Disainin ja koodin veebilehti.",
         en: "I design & code websites.",
       },
+      heroNoteLabel: {
+        et: "L\u00e4henemine",
+        en: "Approach",
+      },
+      heroNote: {
+        et: "Selge visuaalne hierarhia, puhas front-end ja detailid, mis hoiavad t\u00f6\u00f6 terava ning professionaalse.",
+        en: "Clear visual hierarchy, clean front-end, and details that keep the work sharp and professional.",
+      },
       introHtml: {
         et: "Teen <span class=\"copy-highlight\">landing page'e</span>, <span class=\"copy-highlight\">veebilehti</span> ja visuaale, mis liiguvad kiiresti ideest koodini. Praegu \u00f5pin <span class=\"copy-highlight\">Tallinna Pol\u00fctehnikumis</span> ja t\u00f6\u00f6tan praktikal <span class=\"copy-highlight\">Fiizy O\u00dc-s</span>.",
         en: "I build <span class=\"copy-highlight\">landing pages</span>, <span class=\"copy-highlight\">websites</span>, and visuals that move quickly from idea to code. Right now I'm studying at <span class=\"copy-highlight\">Tallinn Polytechnic</span> and working as an intern at <span class=\"copy-highlight\">Fiizy O\u00dc</span>.",
@@ -96,6 +104,10 @@ window.PORTFOLIO_CONTENT = {
           et: "Minu 3 viimast t\u00f6\u00f6d.",
           en: "My 3 most recent works.",
         },
+        text: {
+          et: "Kolm hiljutist projekti, kus \u00fchendan kampaaniafookuse, visuaalse selguse ja t\u00f6\u00f6tava teostuse.",
+          en: "Three recent projects where I combine campaign focus, visual clarity, and working implementation.",
+        },
       },
       tools: {
         label: {
@@ -109,6 +121,38 @@ window.PORTFOLIO_CONTENT = {
         text: {
           et: "Figma, Adobe ja front-end t\u00f6\u00f6riistad, millega liigun kiiresti kavandist t\u00f6\u00f6tava tulemuseni.",
           en: "Figma, Adobe, and front-end tools that help me move quickly from concept to a working result.",
+        },
+        panels: {
+          concept: {
+            label: {
+              et: "Kontseptsioon ja struktuur",
+              en: "Concept and structure",
+            },
+            text: {
+              et: "Wireframe'id, kompositsioon ja kiire iteratsioon enne kui liigun detaili.",
+              en: "Wireframes, composition, and fast iteration before I move into finer detail.",
+            },
+          },
+          visual: {
+            label: {
+              et: "Visuaalne viimistlus",
+              en: "Visual polish",
+            },
+            text: {
+              et: "Hero-visuaalid, kampaaniaelemendid ja detailid, mis hoiavad pildi puhta.",
+              en: "Hero visuals, campaign elements, and the details that keep the image clean.",
+            },
+          },
+          build: {
+            label: {
+              et: "Front-end teostus",
+              en: "Front-end execution",
+            },
+            text: {
+              et: "Puhas HTML, CSS ja JavaScript, et disain j\u00f5uaks kiiresti t\u00f6\u00f6tava tulemuseni.",
+              en: "Clean HTML, CSS, and JavaScript so the design reaches a working result quickly.",
+            },
+          },
         },
       },
     },

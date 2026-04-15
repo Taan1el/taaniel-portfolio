@@ -48,33 +48,103 @@
 
     <main id="main" class="page-main">
       <section class="hero-section">
-        <p class="section-kicker reveal" data-i18n="pages.home.label">
-          Veebidisainer ja arendaja
-        </p>
-        <h1 class="hero-title reveal" data-i18n="pages.home.title">
-          Disainin ja koodin veebilehti.
-        </h1>
-        <p class="hero-intro reveal" data-i18n-html="pages.home.introHtml">
-          Teen <span class="copy-highlight">landing page'e</span>,
-          <span class="copy-highlight">veebilehti</span> ja visuaale, mis liiguvad kiiresti
-          ideest koodini. Praegu &otilde;pin
-          <span class="copy-highlight">Tallinna Pol&uuml;tehnikumis</span> ja t&ouml;&ouml;tan
-          praktikal <span class="copy-highlight">Fiizy O&Uuml;-s</span>.
-        </p>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="section-kicker reveal" data-i18n="pages.home.label">
+              Veebidisainer ja arendaja
+            </p>
+            <h1 class="hero-title reveal" data-i18n="pages.home.title">
+              Disainin ja koodin veebilehti.
+            </h1>
+            <p class="hero-intro reveal" data-i18n-html="pages.home.introHtml">
+              Teen <span class="copy-highlight">landing page'e</span>,
+              <span class="copy-highlight">veebilehti</span> ja visuaale, mis liiguvad kiiresti
+              ideest koodini. Praegu &otilde;pin
+              <span class="copy-highlight">Tallinna Pol&uuml;tehnikumis</span> ja t&ouml;&ouml;tan
+              praktikal <span class="copy-highlight">Fiizy O&Uuml;-s</span>.
+            </p>
 
-        <div class="button-row reveal">
-          <a class="button button-primary" href="contact.html">
-            <span class="button-label" data-i18n="shared.buttons.contactMe">Kirjuta mulle</span>
-            <span class="button-icon" aria-hidden="true">&#9993;</span>
-          </a>
-          <a
-            class="button button-secondary"
-            href="assets/Taaniel-Vananurm-CV.pdf"
-            download="Taaniel-Vananurm-CV.pdf"
-          >
-            <span class="button-label" data-i18n="shared.buttons.downloadCv">Laadi CV alla</span>
-            <span class="button-icon" aria-hidden="true">&#8595;</span>
-          </a>
+            <div class="hero-note-panel reveal">
+              <p class="hero-note-label" data-i18n="pages.home.heroNoteLabel">L&auml;henemine</p>
+              <p class="hero-note-text" data-i18n="pages.home.heroNote">
+                Selge visuaalne hierarhia, puhas front-end ja detailid, mis hoiavad t&ouml;&ouml;
+                terava ning professionaalse.
+              </p>
+            </div>
+
+            <div class="button-row reveal">
+              <a class="button button-primary" href="contact.html">
+                <span class="button-label" data-i18n="shared.buttons.contactMe">Kirjuta mulle</span>
+                <span class="button-icon" aria-hidden="true">&#9993;</span>
+              </a>
+              <a
+                class="button button-secondary"
+                href="assets/Taaniel-Vananurm-CV.pdf"
+                download="Taaniel-Vananurm-CV.pdf"
+              >
+                <span class="button-label" data-i18n="shared.buttons.downloadCv">Laadi CV alla</span>
+                <span class="button-icon" aria-hidden="true">&#8595;</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual reveal">
+            <article class="hero-primary-card" data-tilt>
+              <div class="hero-card-top">
+                <p class="hero-card-label" data-i18n="pages.home.featured.label">Valitud t&ouml;&ouml;d</p>
+                <span class="hero-card-index" aria-hidden="true">01</span>
+              </div>
+              <a class="hero-primary-link" href="work.html#dineromon-email">
+                <img
+                  class="hero-primary-image"
+                  src="assets/Dineromon_hero_v2.png"
+                  alt="Punase taustaga hero: suur lubadus 0% intressist, pill-stiilis CTA ning naeratav inimene ostukottidega."
+                  data-i18n-alt="projects.dineromon.heroAlt"
+                />
+                <div class="hero-primary-copy">
+                  <p class="project-kicker" data-i18n="projects.dineromon.kicker">
+                    E-maili kampaania
+                  </p>
+                  <h2 data-i18n="projects.dineromon.title">
+                    Fintech e-maili kampaania (0% pakkumine)
+                  </h2>
+                  <p class="hero-card-summary" data-i18n="projects.dineromon.oneLiner">
+                    Disainisin tiimis hero-b&auml;nneri ja modulaarse e-maili layout'i,
+                    mis t&otilde;stab esile 0% lubaduse ja juhib klikini &uuml;he selge CTA
+                    kaudu.
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <div class="hero-secondary-stack">
+              <a class="hero-mini-card reveal" href="work.html#credito365-email" data-tilt>
+                <img
+                  class="hero-mini-image"
+                  src="assets/Credito365_2605.jpg"
+                  alt="Hero-visuaal, kus on r&otilde;hutatud raha k&auml;ttesaamist 10 minutiga, CTA-nupp ja shoppingu kontekst."
+                  data-i18n-alt="projects.credito365.heroAlt"
+                />
+                <div class="hero-mini-copy">
+                  <span class="hero-mini-index" aria-hidden="true">02</span>
+                  <h3 data-i18n="projects.credito365.title">Kiirlaenu e-maili hero + template</h3>
+                </div>
+              </a>
+
+              <a class="hero-mini-card reveal" href="work.html#cozmo-email" data-tilt>
+                <img
+                  class="hero-mini-image"
+                  src="assets/Cozmo_2605.jpg"
+                  alt="Hero-visuaal maskotiga, lubadusega kuni 30 000 pesot ning mini-UI kaardiga summa ja perioodi kohta."
+                  data-i18n-alt="projects.cozmo.heroAlt"
+                />
+                <div class="hero-mini-copy">
+                  <span class="hero-mini-index" aria-hidden="true">03</span>
+                  <h3 data-i18n="projects.cozmo.title">Maskotiga br&auml;ndikampaania e-mailis</h3>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -105,6 +175,13 @@
           <h2 class="section-title" data-i18n="pages.home.featured.title">
             Minu 3 viimast t&ouml;&ouml;d.
           </h2>
+          <p class="section-note" data-i18n="pages.home.featured.text">
+            Kolm hiljutist projekti, kus &uuml;hendan kampaaniafookuse, visuaalse selguse ja
+            t&ouml;&ouml;tava teostuse.
+          </p>
+          <a class="text-link section-link" href="work.html" data-i18n="shared.buttons.viewWork">
+            Vaata t&ouml;id
+          </a>
         </div>
 
         <div class="project-grid">
@@ -194,37 +271,76 @@
         </div>
 
         <div class="tool-grid">
-          <article class="tool-item reveal">
-            <img src="assets/icons/figma.svg" alt="Figma logo" />
-            <span>Figma</span>
+          <article class="tool-panel reveal">
+            <div class="tool-panel-head">
+              <p class="tool-panel-label" data-i18n="pages.home.tools.panels.concept.label">
+                Kontseptsioon ja struktuur
+              </p>
+              <p class="tool-panel-text" data-i18n="pages.home.tools.panels.concept.text">
+                Wireframe'id, kompositsioon ja kiire iteratsioon enne kui liigun detaili.
+              </p>
+            </div>
+            <div class="tool-list">
+              <div class="tool-pill">
+                <img src="assets/icons/figma.svg" alt="" aria-hidden="true" />
+                <span>Figma</span>
+              </div>
+              <div class="tool-pill">
+                <img src="assets/icons/wordpress.svg" alt="" aria-hidden="true" />
+                <span>WordPress</span>
+              </div>
+            </div>
           </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/photoshop.svg" alt="Adobe Photoshop logo" />
-            <span>Photoshop</span>
+
+          <article class="tool-panel reveal">
+            <div class="tool-panel-head">
+              <p class="tool-panel-label" data-i18n="pages.home.tools.panels.visual.label">
+                Visuaalne viimistlus
+              </p>
+              <p class="tool-panel-text" data-i18n="pages.home.tools.panels.visual.text">
+                Hero-visuaalid, kampaaniaelemendid ja detailid, mis hoiavad pildi puhta.
+              </p>
+            </div>
+            <div class="tool-list">
+              <div class="tool-pill">
+                <img src="assets/icons/photoshop.svg" alt="" aria-hidden="true" />
+                <span>Photoshop</span>
+              </div>
+              <div class="tool-pill">
+                <img src="assets/icons/illustrator.svg" alt="" aria-hidden="true" />
+                <span>Illustrator</span>
+              </div>
+            </div>
           </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/illustrator.svg" alt="Adobe Illustrator logo" />
-            <span>Illustrator</span>
-          </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/wordpress.svg" alt="WordPress logo" />
-            <span>WordPress</span>
-          </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/html5.svg" alt="HTML5 logo" />
-            <span>HTML5</span>
-          </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/css3.svg" alt="CSS3 logo" />
-            <span>CSS3</span>
-          </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/javascript.svg" alt="JavaScript logo" />
-            <span>JavaScript</span>
-          </article>
-          <article class="tool-item reveal">
-            <img src="assets/icons/vscode.svg" alt="Visual Studio Code logo" />
-            <span>VS Code</span>
+
+          <article class="tool-panel reveal">
+            <div class="tool-panel-head">
+              <p class="tool-panel-label" data-i18n="pages.home.tools.panels.build.label">
+                Front-end teostus
+              </p>
+              <p class="tool-panel-text" data-i18n="pages.home.tools.panels.build.text">
+                Puhas HTML, CSS ja JavaScript, et disain j&otilde;uaks kiiresti t&ouml;&ouml;tava
+                tulemuseni.
+              </p>
+            </div>
+            <div class="tool-list">
+              <div class="tool-pill">
+                <img src="assets/icons/html5.svg" alt="" aria-hidden="true" />
+                <span>HTML5</span>
+              </div>
+              <div class="tool-pill">
+                <img src="assets/icons/css3.svg" alt="" aria-hidden="true" />
+                <span>CSS3</span>
+              </div>
+              <div class="tool-pill">
+                <img src="assets/icons/javascript.svg" alt="" aria-hidden="true" />
+                <span>JavaScript</span>
+              </div>
+              <div class="tool-pill">
+                <img src="assets/icons/vscode.svg" alt="" aria-hidden="true" />
+                <span>VS Code</span>
+              </div>
+            </div>
           </article>
         </div>
       </section>
