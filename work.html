@@ -221,7 +221,45 @@
           </article>
         </div>
       </section>
+
+      <section class="fiizy-archive-section">
+        <div class="section-head section-head-lined reveal">
+          <p class="section-kicker" data-i18n="pages.work.archiveLabel">Fiizy arhiiv</p>
+          <h2 class="section-title archive-title" data-i18n="pages.work.archiveTitle">
+            Lisahero'd, mis toetavad p&otilde;hivalikut ilma seda &uuml;le kirjutamata.
+          </h2>
+          <p class="section-note archive-note" data-i18n="pages.work.archiveText">
+            Sekundaarne galerii Fiizy kampaaniahero'dest. See j&auml;tab p&otilde;hit&ouml;&ouml;d
+            esiplaanile, aga annab soovi korral kiire &uuml;levaate suuremast mahust.
+          </p>
+          <p class="archive-helper" data-i18n="pages.work.archiveNote">
+            Lisa failid kausta assets/fiizy-archive/ nimekujuga fiizy-hero-01 kuni fiizy-hero-30.
+          </p>
+        </div>
+
+        <div class="archive-empty reveal" id="fiizy-archive-empty" data-i18n="pages.work.archiveEmpty">
+          Arhiiv ilmub siia automaatselt, kui pildid on lisatud.
+        </div>
+        <div class="archive-grid reveal" id="fiizy-archive-grid" aria-live="polite"></div>
+      </section>
     </main>
+
+    <div class="archive-lightbox" id="archive-lightbox" hidden>
+      <button
+        class="archive-lightbox-close"
+        type="button"
+        id="archive-lightbox-close"
+        aria-label="Sulge pildivaade"
+        data-i18n-aria-label="pages.work.archiveLightboxClose"
+      >
+        &#10005;
+      </button>
+      <div class="archive-lightbox-backdrop" id="archive-lightbox-backdrop"></div>
+      <figure class="archive-lightbox-figure">
+        <img class="archive-lightbox-image" id="archive-lightbox-image" alt="" />
+        <figcaption class="archive-lightbox-caption" id="archive-lightbox-caption"></figcaption>
+      </figure>
+    </div>
 
     <footer class="site-footer">
       <div class="site-footer-inner">
