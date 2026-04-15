@@ -59,6 +59,22 @@ window.PORTFOLIO_CONTENT = {
         et: "Selge visuaalne hierarhia, puhas front-end ja detailid, mis hoiavad t\u00f6\u00f6 terava ning professionaalse.",
         en: "Clear visual hierarchy, clean front-end, and details that keep the work sharp and professional.",
       },
+      heroShowcaseLabel: {
+        et: "Fiizy praktika",
+        en: "Fiizy internship",
+      },
+      heroShowcaseTitle: {
+        et: "Praktikal valminud kampaaniahero'd ja e-maili visuaalid.",
+        en: "Campaign heroes and email visuals made during my internship.",
+      },
+      heroShowcaseText: {
+        et: "Valik t\u00f6\u00f6dest, kus keskendusin kiirele pakkumisele, selgele CTA-le ja puhtale kompositsioonile.",
+        en: "A selection of work focused on fast-offer messaging, clear CTAs, and clean composition.",
+      },
+      heroShowcaseAlt: {
+        et: "Erksav\u00e4rviline kampaaniahero, kus laenupakkumine, tegelaskuju ja CTA on koondatud \u00fchte puhtasse kompositsiooni.",
+        en: "A colorful campaign hero where the offer, character, and CTA are combined into one clean composition.",
+      },
       introHtml: {
         et: "Teen <span class=\"copy-highlight\">landing page'e</span>, <span class=\"copy-highlight\">veebilehti</span> ja visuaale, mis liiguvad kiiresti ideest koodini. Praegu \u00f5pin <span class=\"copy-highlight\">Tallinna Pol\u00fctehnikumis</span> ja t\u00f6\u00f6tan praktikal <span class=\"copy-highlight\">Fiizy O\u00dc-s</span>.",
         en: "I build <span class=\"copy-highlight\">landing pages</span>, <span class=\"copy-highlight\">websites</span>, and visuals that move quickly from idea to code. Right now I'm studying at <span class=\"copy-highlight\">Tallinn Polytechnic</span> and working as an intern at <span class=\"copy-highlight\">Fiizy O\u00dc</span>.",

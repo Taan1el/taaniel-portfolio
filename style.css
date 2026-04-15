@@ -285,15 +285,20 @@ body.is-scrolled .site-header {
   animation: ambient-float 20s ease-in-out infinite reverse;
 }
 
+.page-intro::before,
+.page-intro::after {
+  display: none;
+}
+
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.96fr) minmax(20rem, 1.04fr);
-  gap: 1.6rem;
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.92fr);
+  gap: 1.35rem;
+  align-items: stretch;
 }
 
 .hero-copy,
-.hero-visual,
+.hero-focus,
 .page-intro > * {
   position: relative;
   z-index: 1;
@@ -303,15 +308,9 @@ body.is-scrolled .site-header {
   max-width: 41rem;
 }
 
-.hero-visual {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(13rem, 14.5rem);
-  gap: 1rem;
-  align-items: stretch;
-}
-
 .hero-primary-card,
 .hero-mini-card,
+.hero-focus,
 .project-card,
 .tool-panel,
 .detail-card,
@@ -328,6 +327,7 @@ body.is-scrolled .site-header {
 
 .hero-primary-card,
 .hero-mini-card,
+.hero-focus,
 .project-card,
 .tool-panel,
 .case-study {
@@ -336,6 +336,7 @@ body.is-scrolled .site-header {
 
 .hero-primary-card,
 .hero-mini-card,
+.hero-focus,
 .project-card,
 .tool-panel,
 .detail-card,
@@ -350,6 +351,7 @@ body.is-scrolled .site-header {
 
 .hero-primary-card::before,
 .hero-mini-card::before,
+.hero-focus::before,
 .project-card::after,
 .tool-panel::before,
 .case-study::after {
@@ -364,6 +366,7 @@ body.is-scrolled .site-header {
 
 .hero-primary-card,
 .hero-mini-card,
+.hero-focus,
 .project-card,
 .tool-panel {
   --tilt-x: 0deg;
@@ -380,12 +383,57 @@ body.is-scrolled .site-header {
 
 .hero-primary-card:hover,
 .hero-mini-card:hover,
+.hero-focus:hover,
 .project-card:hover,
 .project-card:focus-within,
 .tool-panel:hover {
   --lift-y: -4px;
   border-color: var(--border-strong);
   box-shadow: var(--shadow-deep);
+}
+
+.hero-focus {
+  display: flex;
+  min-height: 100%;
+}
+
+.hero-focus-link {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.hero-focus-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.hero-focus-label,
+.hero-focus-cta {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-focus-label {
+  color: var(--muted-strong);
+}
+
+.hero-focus-cta {
+  color: rgba(255, 244, 231, 0.44);
+}
+
+.hero-focus-frame {
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 244, 231, 0.08);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .hero-card-top {
@@ -420,6 +468,7 @@ body.is-scrolled .site-header {
   padding: 0 1rem 1rem;
 }
 
+.hero-focus-image,
 .hero-primary-image,
 .hero-mini-image,
 .project-image,
@@ -434,6 +483,29 @@ body.is-scrolled .site-header {
     transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
     filter 260ms ease;
   will-change: transform;
+}
+
+.hero-focus-image {
+  aspect-ratio: 1.18;
+}
+
+.hero-focus-copy {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.hero-focus-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.75rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+
+.hero-focus-text {
+  margin: 0;
+  max-width: 28rem;
 }
 
 .hero-primary-image {

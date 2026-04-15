@@ -282,7 +282,7 @@ function initializeTilt() {
   }
 
   const tiltTargets = document.querySelectorAll(
-    ".hero-primary-card, .hero-mini-card, .project-card, .tool-panel"
+    ".hero-focus, .hero-primary-card, .hero-mini-card, .project-card, .tool-panel"
   );
 
   tiltTargets.forEach((target) => {
@@ -314,7 +314,7 @@ function initializeMediaParallax() {
   }
 
   const motionTargets = document.querySelectorAll(
-    ".hero-primary-image, .hero-mini-image, .project-image, .case-hero-image, .case-layout-image, .photo-card img"
+    ".hero-focus-image, .hero-primary-image, .hero-mini-image, .project-image, .case-hero-image, .case-layout-image, .photo-card img"
   );
 
   if (!motionTargets.length) {
