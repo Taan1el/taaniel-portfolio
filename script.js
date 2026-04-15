@@ -7,8 +7,18 @@ const htmlNodes = document.querySelectorAll("[data-i18n-html]");
 const altNodes = document.querySelectorAll("[data-i18n-alt]");
 const ariaNodes = document.querySelectorAll("[data-i18n-aria-label]");
 const yearNode = document.getElementById("year");
+const fiizyArchiveGrid = document.getElementById("fiizy-archive-grid");
+const fiizyArchiveEmpty = document.getElementById("fiizy-archive-empty");
+const archiveLightbox = document.getElementById("archive-lightbox");
+const archiveLightboxImage = document.getElementById("archive-lightbox-image");
+const archiveLightboxCaption = document.getElementById("archive-lightbox-caption");
+const archiveLightboxClose = document.getElementById("archive-lightbox-close");
+const archiveLightboxBackdrop = document.getElementById("archive-lightbox-backdrop");
 const langStorageKey = content.site.localStorageKey;
 const defaultLang = content.site.defaultLang;
+const fiizyArchiveItems = content.pages?.work?.archiveItems ?? [];
+let fiizyArchiveRenderToken = 0;
+let activeLang = defaultLang;
 
 function readPath(source, path) {
   return path.split(".").reduce((value, key) => value?.[key], source);
@@ -39,6 +49,7 @@ function applyMeta(lang) {
 }
 
 function applyLanguage(lang) {
+  activeLang = lang;
   document.documentElement.lang = lang;
 
   textNodes.forEach((node) => {
@@ -80,6 +91,7 @@ function applyLanguage(lang) {
   });
 
   applyMeta(lang);
+  renderFiizyArchive(lang);
   localStorage.setItem(langStorageKey, lang);
 }
 
@@ -103,6 +115,125 @@ function initializeLanguage() {
       applyLanguage(button.dataset.langTrigger);
     });
   });
+}
+
+function initializeHeaderState() {
+  const syncHeader = () => {
+    document.body.classList.toggle("is-scrolled", window.scrollY > 16);
+  };
+
+  syncHeader();
+  window.addEventListener("scroll", syncHeader, { passive: true });
+}
+
+function initializePointerAura() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  const root = document.documentElement;
+  const setPointer = (x, y) => {
+    root.style.setProperty("--pointer-x", `${x}px`);
+    root.style.setProperty("--pointer-y", `${y}px`);
+  };
+
+  setPointer(window.innerWidth * 0.5, window.innerHeight * 0.22);
+
+  window.addEventListener(
+    "pointermove",
+    (event) => {
+      setPointer(event.clientX, event.clientY);
+    },
+    { passive: true }
+  );
+}
+
+function formatArchiveIndex(index) {
+  return String(index).padStart(2, "0");
+}
+
+function openArchiveLightbox(src, label) {
+  if (!archiveLightbox || !archiveLightboxImage || !archiveLightboxCaption) {
+    return;
+  }
+
+  archiveLightboxImage.src = src;
+  archiveLightboxImage.alt = label;
+  archiveLightboxCaption.textContent = label;
+  archiveLightbox.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeArchiveLightbox() {
+  if (!archiveLightbox || !archiveLightboxImage || !archiveLightboxCaption) {
+    return;
+  }
+
+  archiveLightbox.hidden = true;
+  archiveLightboxImage.removeAttribute("src");
+  archiveLightboxImage.alt = "";
+  archiveLightboxCaption.textContent = "";
+  document.body.style.overflow = "";
+}
+
+function createArchiveCard(src, index, lang) {
+  const labelRoot = getLocalized("pages.work.archiveImageLabel", lang);
+  const label = `${labelRoot} ${formatArchiveIndex(index)}`;
+  const article = document.createElement("article");
+  const button = document.createElement("button");
+  const image = document.createElement("img");
+  const copy = document.createElement("div");
+  const title = document.createElement("p");
+  const slot = document.createElement("p");
+
+  article.className = "archive-card";
+  button.className = "archive-button";
+  button.type = "button";
+
+  image.className = "archive-image";
+  image.src = src;
+  image.alt = label;
+  image.loading = "lazy";
+
+  copy.className = "archive-card-copy";
+  title.className = "archive-card-title";
+  title.textContent = label;
+  slot.className = "archive-card-index";
+  slot.textContent = formatArchiveIndex(index);
+
+  copy.append(title, slot);
+  button.append(image, copy);
+  article.append(button);
+
+  button.addEventListener("click", () => openArchiveLightbox(src, label));
+
+  return article;
+}
+
+function renderFiizyArchive(lang) {
+  if (!fiizyArchiveGrid) {
+    return;
+  }
+
+  const renderToken = ++fiizyArchiveRenderToken;
+  const visibleItems = fiizyArchiveItems
+    .map((src, itemIndex) => ({ src, index: itemIndex + 1 }))
+    .filter((item) => typeof item.src === "string" && item.src.length > 0);
+
+  if (renderToken !== fiizyArchiveRenderToken) {
+    return;
+  }
+
+  fiizyArchiveGrid.innerHTML = "";
+  visibleItems.forEach((item) => {
+    fiizyArchiveGrid.append(createArchiveCard(item.src, item.index, lang));
+  });
+
+  fiizyArchiveGrid.classList.toggle("has-items", visibleItems.length > 0);
+
+  if (fiizyArchiveEmpty) {
+    fiizyArchiveEmpty.hidden = visibleItems.length > 0;
+  }
 }
 
 function initializeRevealSequence() {
@@ -145,13 +276,45 @@ function initializeReveal() {
   revealItems.forEach((item) => observer.observe(item));
 }
 
+function initializeTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  const tiltTargets = document.querySelectorAll(
+    ".hero-primary-card, .hero-mini-card, .project-card, .tool-panel"
+  );
+
+  tiltTargets.forEach((target) => {
+    const resetTilt = () => {
+      target.style.setProperty("--tilt-x", "0deg");
+      target.style.setProperty("--tilt-y", "0deg");
+    };
+
+    target.addEventListener("pointermove", (event) => {
+      const rect = target.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      const rotateY = (x - 0.5) * 6;
+      const rotateX = (0.5 - y) * 6;
+
+      target.style.setProperty("--tilt-x", `${rotateX.toFixed(2)}deg`);
+      target.style.setProperty("--tilt-y", `${rotateY.toFixed(2)}deg`);
+    });
+
+    target.addEventListener("pointerleave", resetTilt);
+    target.addEventListener("pointercancel", resetTilt);
+    target.addEventListener("blur", resetTilt, true);
+  });
+}
+
 function initializeMediaParallax() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return;
   }
 
   const motionTargets = document.querySelectorAll(
-    ".project-image, .case-hero-image, .case-layout-image, .photo-card img"
+    ".hero-primary-image, .hero-mini-image, .project-image, .case-hero-image, .case-layout-image, .photo-card img"
   );
 
   if (!motionTargets.length) {
@@ -194,11 +357,30 @@ function initializeMediaParallax() {
   window.addEventListener("resize", requestTick);
 }
 
+function initializeArchiveLightbox() {
+  if (!archiveLightbox) {
+    return;
+  }
+
+  archiveLightboxClose?.addEventListener("click", closeArchiveLightbox);
+  archiveLightboxBackdrop?.addEventListener("click", closeArchiveLightbox);
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !archiveLightbox.hidden) {
+      closeArchiveLightbox();
+    }
+  });
+}
+
 if (yearNode) {
   yearNode.textContent = new Date().getFullYear();
 }
 
+initializeArchiveLightbox();
 initializeLanguage();
+initializeHeaderState();
+initializePointerAura();
 initializeRevealSequence();
 initializeReveal();
+initializeTilt();
 initializeMediaParallax();
