@@ -117,12 +117,12 @@ window.PORTFOLIO_CONTENT = {
           en: "Selected work",
         },
         title: {
-          et: "Minu 3 viimast t\u00f6\u00f6d.",
-          en: "My 3 most recent works.",
+          et: "Valitud kampaaniad praktikast.",
+          en: "Selected campaigns from my internship.",
         },
         text: {
-          et: "Kolm hiljutist projekti, kus \u00fchendan kampaaniafookuse, visuaalse selguse ja t\u00f6\u00f6tava teostuse.",
-          en: "Three recent projects where I combine campaign focus, visual clarity, and working implementation.",
+          et: "Kolm n\u00e4idet, kus \u00fchendasin hero-visuaali, e-maili layout'i ja selge kampaanias\u00f5numi.",
+          en: "Three examples where I combined hero visuals, email layout, and a clear campaign message.",
         },
       },
       tools: {

@@ -778,7 +778,7 @@ body.is-scrolled .site-header {
 
 .project-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
   counter-reset: project-counter;
 }
@@ -806,7 +806,7 @@ body.is-scrolled .site-header {
 }
 
 .project-image {
-  aspect-ratio: 1.18;
+  aspect-ratio: 4 / 3;
 }
 
 .project-copy {
@@ -828,36 +828,34 @@ body.is-scrolled .site-header {
 .case-study:hover .case-hero-image,
 .case-layout-frame:hover .case-layout-image,
 .photo-card:hover img,
+.hero-focus:hover .hero-focus-image,
 .hero-primary-card:hover .hero-primary-image,
 .hero-mini-card:hover .hero-mini-image {
   transform: translate3d(0, calc(var(--media-shift, 0px) - 8px), 0) scale(1.035);
 }
 
 .project-card:first-child {
-  grid-row: span 2;
+  grid-row: auto;
 }
 
 .project-card:first-child .project-link {
-  display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(18rem, 0.98fr);
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card:first-child .project-image {
-  height: 100%;
-  min-height: 100%;
-  aspect-ratio: auto;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
 }
 
 .project-card:first-child .project-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1.7rem;
+  display: block;
+  padding: 1.25rem 1.3rem 1.4rem;
 }
 
 .project-card:first-child .project-copy h3 {
-  font-size: clamp(2.1rem, 3.4vw, 3rem);
+  font-size: clamp(1.7rem, 2.4vw, 2.2rem);
 }
 
 .tools-section {
@@ -1377,21 +1375,13 @@ body.is-scrolled .site-header {
     grid-template-columns: 1fr;
   }
 
-  .hero-visual {
-    grid-template-columns: minmax(0, 1fr) minmax(12rem, 15rem);
-  }
-
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .project-card:first-child {
     grid-row: auto;
-    grid-column: span 2;
-  }
-
-  .project-card:first-child .project-link {
-    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+    grid-column: auto;
   }
 
   .tool-grid,
@@ -1420,15 +1410,6 @@ body.is-scrolled .site-header {
 
   .site-nav {
     flex-wrap: wrap;
-  }
-
-  .hero-visual {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-secondary-stack {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .proof-strip,
@@ -1476,10 +1457,6 @@ body.is-scrolled .site-header {
   .photo-grid,
   .email-gallery-grid,
   .archive-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-secondary-stack {
     grid-template-columns: 1fr;
   }
 
