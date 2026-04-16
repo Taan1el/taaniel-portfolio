@@ -177,8 +177,8 @@ window.PORTFOLIO_CONTENT = {
               en: "Front-end execution",
             },
             text: {
-              et: "Puhas HTML, CSS, JavaScript ja GSAP, kui leht vajab sujuvat liikumist ja tugevamat r\u00fctmi.",
-              en: "Clean HTML, CSS, JavaScript, and GSAP when a page needs smoother motion and a stronger rhythm.",
+              et: "Puhas HTML, CSS ja JavaScript, et disain j\u00f5uaks kiiresti t\u00f6\u00f6tava tulemuseni.",
+              en: "Clean HTML, CSS, and JavaScript so the design reaches a working result quickly.",
             },
           },
         },

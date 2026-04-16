@@ -424,10 +424,19 @@ function initializeGsapMotion() {
   const { gsap, ScrollTrigger } = window;
   const revealStagger = motionPreferenceQuery.matches ? 0.04 : 0.12;
   const heroStagger = motionPreferenceQuery.matches ? 0.05 : 0.11;
+  const editorialDistance = motionPreferenceQuery.matches ? 26 : 54;
   const initialGroups = document.querySelectorAll(".hero-section, .page-intro");
   const scrollGroups = document.querySelectorAll(
     ".proof-strip, .featured-section, .tools-section, .case-study-list, .email-gallery-section, .detail-grid, .photo-section, .contact-grid"
   );
+  const editorialGroups = [
+    { trigger: document.querySelector(".page-intro"), targets: ".section-kicker, .page-title, .page-intro-text" },
+    { trigger: document.querySelector(".featured-section"), targets: ".section-head > *" },
+    { trigger: document.querySelector(".tools-section"), targets: ".section-head > *" },
+    { trigger: document.querySelector(".photo-section"), targets: ".section-head > *" },
+    { trigger: document.querySelector(".email-gallery-section"), targets: ".section-head > *" },
+    { trigger: document.querySelector(".fiizy-archive-section"), targets: ".section-head > *" },
+  ];
 
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({
@@ -469,9 +478,201 @@ function initializeGsapMotion() {
     });
   });
 
+  editorialGroups.forEach((config) => {
+    if (!config.trigger) {
+      return;
+    }
+
+    const targets = config.trigger.querySelectorAll(config.targets);
+
+    if (!targets.length) {
+      return;
+    }
+
+    gsap.fromTo(
+      targets,
+      {
+        y: editorialDistance,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: motionPreferenceQuery.matches ? 0.8 : 1.15,
+        stagger: motionPreferenceQuery.matches ? 0.05 : 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: config.trigger,
+          start: "top 84%",
+          once: true,
+        },
+      }
+    );
+
+    gsap.to(targets, {
+      y: motionPreferenceQuery.matches ? -14 : -32,
+      opacity: (_, target) => (target.classList.contains("section-kicker") ? 0.7 : 0.38),
+      ease: "none",
+      stagger: 0.04,
+      scrollTrigger: {
+        trigger: config.trigger,
+        start: "top 42%",
+        end: "bottom top+=140",
+        scrub: true,
+      },
+    });
+  });
+
+  gsap.matchMedia().add("(min-width: 961px)", () => {
+    const cleanup = [];
+    const homeProjectGrid = document.querySelector(".page-home .project-grid");
+    const photoSection = document.querySelector(".page-about .photo-section");
+    const photoTrack = photoSection?.querySelector(".photo-grid");
+
+    if (homeProjectGrid) {
+      const cards = homeProjectGrid.querySelectorAll(".project-card");
+
+      homeProjectGrid.classList.add("is-stack-layout");
+      cleanup.push(() => {
+        homeProjectGrid.classList.remove("is-stack-layout");
+        cards.forEach((card) => {
+          card.style.removeProperty("filter");
+          card.style.removeProperty("opacity");
+        });
+      });
+
+      cards.forEach((card, index) => {
+        const nextCard = cards[index + 1];
+
+        if (!nextCard) {
+          return;
+        }
+
+        gsap.to(card, {
+          scale: 0.93,
+          y: -48,
+          opacity: 0.54,
+          ease: "none",
+          scrollTrigger: {
+            trigger: nextCard,
+            start: "top 78%",
+            end: "top 18%",
+            scrub: true,
+          },
+        });
+      });
+    }
+
+    if (photoSection && photoTrack) {
+      const photoStage = photoSection.querySelector(".photo-gallery-stage");
+
+      if (!photoStage) {
+        return () => {
+          cleanup.forEach((fn) => fn());
+        };
+      }
+
+      photoSection.classList.add("is-horizontal-gallery");
+      photoStage.classList.add("is-horizontal-gallery");
+      photoTrack.classList.add("is-horizontal-gallery");
+
+      cleanup.push(() => {
+        photoSection.classList.remove("is-horizontal-gallery");
+        photoStage.classList.remove("is-horizontal-gallery");
+        photoTrack.classList.remove("is-horizontal-gallery");
+        photoTrack.style.removeProperty("transform");
+      });
+
+      const getTravel = () => Math.max(0, photoTrack.scrollWidth - photoStage.clientWidth);
+
+      if (getTravel() > 0) {
+        gsap.to(photoTrack, {
+          x: () => -getTravel(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: photoStage,
+            start: "top center",
+            end: () => `+=${getTravel() + window.innerWidth * 0.45}`,
+            pin: photoStage,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
+    }
+
+    return () => {
+      cleanup.forEach((fn) => fn());
+    };
+  });
+
   ScrollTrigger.refresh();
 
   return true;
+}
+
+function initializeReactiveTitle() {
+  if (!hasGsapMotion() || motionPreferenceQuery.matches) {
+    return;
+  }
+
+  const { gsap } = window;
+  const heroTitle = document.querySelector(".page-home .hero-title");
+
+  if (!heroTitle || heroTitle.dataset.cursorReactive === "true") {
+    return;
+  }
+
+  const resetChars = () => {
+    heroTitle.querySelectorAll(".split-char").forEach((char) => {
+      gsap.to(char, {
+        x: 0,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        overwrite: true,
+      });
+    });
+  };
+
+  heroTitle.dataset.cursorReactive = "true";
+
+  heroTitle.addEventListener("pointermove", (event) => {
+    heroTitle.querySelectorAll(".split-char").forEach((char) => {
+      const rect = char.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = centerX - event.clientX;
+      const dy = centerY - event.clientY;
+      const distance = Math.hypot(dx, dy);
+      const radius = 150;
+
+      if (distance > radius) {
+        gsap.to(char, {
+          x: 0,
+          y: 0,
+          duration: 0.55,
+          ease: "power3.out",
+          overwrite: true,
+        });
+        return;
+      }
+
+      const force = (1 - distance / radius) * 18;
+      const angle = Math.atan2(dy, dx);
+
+      gsap.to(char, {
+        x: Math.cos(angle) * force,
+        y: Math.sin(angle) * force,
+        duration: 0.28,
+        ease: "power2.out",
+        overwrite: true,
+      });
+    });
+  });
+
+  heroTitle.addEventListener("pointerleave", resetChars);
 }
 
 function initializeTilt() {
@@ -484,6 +685,10 @@ function initializeTilt() {
   );
 
   tiltTargets.forEach((target) => {
+    if (target.matches(".project-card") && target.closest(".project-grid.is-stack-layout")) {
+      return;
+    }
+
     const resetTilt = () => {
       target.style.setProperty("--tilt-x", "0deg");
       target.style.setProperty("--tilt-y", "0deg");
@@ -581,6 +786,7 @@ initializeRevealSequence();
 if (!initializeGsapMotion()) {
   initializeReveal();
 }
+initializeReactiveTitle();
 initializeTilt();
 initializeMediaParallax();
 initializeMediaIntegrity();

@@ -743,6 +743,7 @@ body.is-scrolled .site-header {
   opacity: 0;
   transform: translate3d(0, 1.1em, 0) rotate(7deg);
   filter: blur(10px);
+  will-change: transform;
   transition:
     opacity 720ms ease calc(var(--reveal-delay, 0ms) + var(--unit-index, 0) * 22ms),
     transform 900ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--reveal-delay, 0ms) + var(--unit-index, 0) * 22ms),
@@ -875,6 +876,7 @@ body.is-scrolled .site-header {
 .section-head {
   max-width: 46rem;
   margin-bottom: 2rem;
+  will-change: transform, opacity;
 }
 
 .section-head-lined {
@@ -921,8 +923,36 @@ body.is-scrolled .site-header {
   counter-reset: project-counter;
 }
 
+.project-grid.is-stack-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 0.4rem;
+}
+
 .project-card {
   counter-increment: project-counter;
+  will-change: transform, opacity;
+}
+
+.project-grid.is-stack-layout .project-card {
+  position: sticky;
+  top: 6.5rem;
+  width: min(100%, 56rem);
+  margin: 0 auto;
+  transform-origin: center top;
+}
+
+.project-grid.is-stack-layout .project-card:nth-child(2) {
+  top: 8rem;
+}
+
+.project-grid.is-stack-layout .project-card:nth-child(3) {
+  top: 9.5rem;
+}
+
+.project-grid.is-stack-layout .project-card + .project-card {
+  margin-top: 16rem;
 }
 
 .project-card::before {
@@ -1047,20 +1077,6 @@ body.is-scrolled .site-header {
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
   font-weight: 700;
-}
-
-.tool-pill-gsap {
-  border-color: rgba(136, 255, 94, 0.28);
-  background: linear-gradient(180deg, rgba(136, 255, 94, 0.14), rgba(255, 255, 255, 0.03));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.tool-pill-gsap span {
-  color: #dff8d2;
-}
-
-.tool-pill-gsap img {
-  filter: none;
 }
 
 .tool-pill img {
@@ -1364,10 +1380,34 @@ body.is-scrolled .site-header {
   max-width: 44rem;
 }
 
+.photo-section.is-horizontal-gallery {
+  overflow: visible;
+}
+
+.photo-gallery-stage {
+  position: relative;
+}
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.photo-gallery-stage.is-horizontal-gallery {
+  min-height: min(76vh, 46rem);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+}
+
+.photo-grid.is-horizontal-gallery {
+  display: flex;
+  gap: 1.2rem;
+  width: max-content;
+  align-items: center;
+  padding-top: 0;
+  will-change: transform;
 }
 
 .photo-card {
@@ -1376,10 +1416,28 @@ body.is-scrolled .site-header {
   border: 1px solid var(--border);
   background: rgba(16, 20, 25, 0.84);
   box-shadow: var(--shadow-soft);
+  flex: 0 0 auto;
+  will-change: transform, filter;
+}
+
+.photo-grid.is-horizontal-gallery .photo-card {
+  width: min(32rem, 38vw);
+}
+
+.photo-grid.is-horizontal-gallery .photo-card-wide {
+  width: min(44rem, 52vw);
 }
 
 .photo-card img {
   aspect-ratio: 4 / 3;
+}
+
+.photo-grid.is-horizontal-gallery .photo-card img,
+.photo-grid.is-horizontal-gallery .photo-card-wide img {
+  width: 100%;
+  height: min(72vh, 40rem);
+  aspect-ratio: auto;
+  object-fit: cover;
 }
 
 .photo-card-wide {
@@ -1686,6 +1744,50 @@ body.is-scrolled .site-header {
   .email-gallery-grid,
   .archive-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-grid.is-stack-layout {
+    display: grid;
+    gap: 1.25rem;
+    padding-top: 0;
+  }
+
+  .project-grid.is-stack-layout .project-card,
+  .project-grid.is-stack-layout .project-card:nth-child(2),
+  .project-grid.is-stack-layout .project-card:nth-child(3) {
+    position: relative;
+    top: auto;
+    width: auto;
+    margin: 0;
+  }
+
+  .project-grid.is-stack-layout .project-card + .project-card {
+    margin-top: 0;
+  }
+
+  .photo-grid.is-horizontal-gallery {
+    display: grid;
+    width: auto;
+    gap: 1rem;
+    padding-top: 0;
+    transform: none !important;
+  }
+
+  .photo-gallery-stage.is-horizontal-gallery {
+    min-height: 0;
+    display: block;
+    overflow: visible;
+  }
+
+  .photo-grid.is-horizontal-gallery .photo-card,
+  .photo-grid.is-horizontal-gallery .photo-card-wide {
+    width: auto;
+  }
+
+  .photo-grid.is-horizontal-gallery .photo-card img,
+  .photo-grid.is-horizontal-gallery .photo-card-wide img {
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 
   .photo-card-wide {
