@@ -17,8 +17,15 @@ const archiveLightboxBackdrop = document.getElementById("archive-lightbox-backdr
 const langStorageKey = content.site.localStorageKey;
 const defaultLang = content.site.defaultLang;
 const fiizyArchiveItems = content.pages?.work?.archiveItems ?? [];
+const motionPreferenceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 let fiizyArchiveRenderToken = 0;
 let activeLang = defaultLang;
+let scrollMeter = null;
+let scrollMeterValue = null;
+
+function hasGsapMotion() {
+  return typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
+}
 
 function readPath(source, path) {
   return path.split(".").reduce((value, key) => value?.[key], source);
@@ -91,7 +98,15 @@ function applyLanguage(lang) {
   });
 
   applyMeta(lang);
+  decorateMotionText();
   renderFiizyArchive(lang);
+
+  if (hasGsapMotion()) {
+    window.requestAnimationFrame(() => {
+      window.ScrollTrigger?.refresh();
+    });
+  }
+
   localStorage.setItem(langStorageKey, lang);
 }
 
@@ -117,6 +132,63 @@ function initializeLanguage() {
   });
 }
 
+function decorateMotionText() {
+  const targets = document.querySelectorAll(".hero-title, .page-title, .section-title, .hero-focus-title");
+
+  targets.forEach((node) => {
+    const source = node.textContent.trim();
+
+    if (!source) {
+      return;
+    }
+
+    const mode = node.classList.contains("hero-title") ? "chars" : "words";
+    const fragment = document.createDocumentFragment();
+    const words = source.split(/\s+/);
+    let unitIndex = 0;
+
+    node.textContent = "";
+    node.classList.add("motion-split");
+    node.classList.toggle("motion-split-chars", mode === "chars");
+    node.classList.toggle("motion-split-words", mode === "words");
+    node.setAttribute("aria-label", source);
+
+    words.forEach((word, wordIndex) => {
+      const wordSpan = document.createElement("span");
+      wordSpan.className = "split-word";
+      wordSpan.setAttribute("aria-hidden", "true");
+
+      if (mode === "chars") {
+        Array.from(word).forEach((character) => {
+          const charSpan = document.createElement("span");
+          charSpan.className = "split-char";
+          charSpan.textContent = character;
+          charSpan.style.setProperty("--unit-index", unitIndex++);
+          wordSpan.append(charSpan);
+        });
+      } else {
+        const unitSpan = document.createElement("span");
+        unitSpan.className = "split-char";
+        unitSpan.textContent = word;
+        unitSpan.style.setProperty("--unit-index", unitIndex++);
+        wordSpan.append(unitSpan);
+      }
+
+      fragment.append(wordSpan);
+
+      if (wordIndex < words.length - 1) {
+        const spaceSpan = document.createElement("span");
+        spaceSpan.className = "split-space";
+        spaceSpan.textContent = " ";
+        spaceSpan.setAttribute("aria-hidden", "true");
+        fragment.append(spaceSpan);
+      }
+    });
+
+    node.append(fragment);
+  });
+}
+
 function initializeHeaderState() {
   const syncHeader = () => {
     document.body.classList.toggle("is-scrolled", window.scrollY > 16);
@@ -126,8 +198,40 @@ function initializeHeaderState() {
   window.addEventListener("scroll", syncHeader, { passive: true });
 }
 
+function updateScrollMeter() {
+  if (!scrollMeter || !scrollMeterValue) {
+    return;
+  }
+
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+  const clampedProgress = Math.max(0, Math.min(1, progress));
+  const displayValue = Math.round(clampedProgress * 100);
+
+  document.documentElement.style.setProperty("--scroll-progress", clampedProgress.toFixed(4));
+  scrollMeterValue.textContent = String(displayValue).padStart(2, "0");
+}
+
+function initializeScrollMeter() {
+  scrollMeter = document.createElement("div");
+  scrollMeter.className = "scroll-meter";
+  scrollMeter.setAttribute("aria-hidden", "true");
+  scrollMeter.innerHTML = `
+    <span class="scroll-meter-label">Scroll</span>
+    <span class="scroll-meter-track"><span class="scroll-meter-fill"></span></span>
+    <span class="scroll-meter-value">00</span>
+  `;
+
+  document.body.append(scrollMeter);
+  scrollMeterValue = scrollMeter.querySelector(".scroll-meter-value");
+
+  updateScrollMeter();
+  window.addEventListener("scroll", updateScrollMeter, { passive: true });
+  window.addEventListener("resize", updateScrollMeter);
+}
+
 function initializePointerAura() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (motionPreferenceQuery.matches) {
     return;
   }
 
@@ -146,10 +250,6 @@ function initializePointerAura() {
     },
     { passive: true }
   );
-}
-
-function formatArchiveIndex(index) {
-  return String(index).padStart(2, "0");
 }
 
 function openArchiveLightbox(src, label) {
@@ -176,15 +276,36 @@ function closeArchiveLightbox() {
   document.body.style.overflow = "";
 }
 
-function createArchiveCard(src, index, lang) {
-  const labelRoot = getLocalized("pages.work.archiveImageLabel", lang);
-  const label = `${labelRoot} ${formatArchiveIndex(index)}`;
+function getArchiveDisplayName(src) {
+  const fileName = src.split("/").pop() ?? src;
+  const baseName = fileName.replace(/\.[^.]+$/, "");
+
+  return baseName
+    .replace(/[_-]+/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((token) => {
+      if (/^[A-Z0-9]+$/.test(token)) {
+        return token;
+      }
+
+      if (/^v\d+$/i.test(token) || /^[a-z]{1,3}$/.test(token)) {
+        return token.toUpperCase();
+      }
+
+      return token.charAt(0).toUpperCase() + token.slice(1);
+    })
+    .join(" ");
+}
+
+function createArchiveCard(src) {
+  const label = getArchiveDisplayName(src);
   const article = document.createElement("article");
   const button = document.createElement("button");
   const image = document.createElement("img");
   const copy = document.createElement("div");
   const title = document.createElement("p");
-  const slot = document.createElement("p");
 
   article.className = "archive-card";
   button.className = "archive-button";
@@ -198,16 +319,40 @@ function createArchiveCard(src, index, lang) {
   copy.className = "archive-card-copy";
   title.className = "archive-card-title";
   title.textContent = label;
-  slot.className = "archive-card-index";
-  slot.textContent = formatArchiveIndex(index);
 
-  copy.append(title, slot);
+  copy.append(title);
   button.append(image, copy);
   article.append(button);
 
   button.addEventListener("click", () => openArchiveLightbox(src, label));
 
   return article;
+}
+
+function initializeMediaIntegrity() {
+  const mediaNodes = document.querySelectorAll(
+    ".hero-focus-image, .hero-primary-image, .hero-mini-image, .project-image, .case-hero-image, .case-layout-image, .archive-image, .photo-card img"
+  );
+
+  const handleFailure = (image) => {
+    image.hidden = true;
+    image.classList.add("is-missing-media");
+    image.removeAttribute("alt");
+    image
+      .closest(".hero-focus, .hero-primary-card, .hero-mini-card, .project-card, .case-study, .email-gallery-card, .archive-card, .photo-card")
+      ?.classList.add("has-missing-media");
+  };
+
+  mediaNodes.forEach((image) => {
+    if (image.complete && image.naturalWidth === 0) {
+      handleFailure(image);
+      return;
+    }
+
+    if (!image.complete) {
+      image.addEventListener("error", () => handleFailure(image), { once: true });
+    }
+  });
 }
 
 function renderFiizyArchive(lang) {
@@ -226,7 +371,7 @@ function renderFiizyArchive(lang) {
 
   fiizyArchiveGrid.innerHTML = "";
   visibleItems.forEach((item) => {
-    fiizyArchiveGrid.append(createArchiveCard(item.src, item.index, lang));
+    fiizyArchiveGrid.append(createArchiveCard(item.src));
   });
 
   fiizyArchiveGrid.classList.toggle("has-items", visibleItems.length > 0);
@@ -251,11 +396,6 @@ function initializeRevealSequence() {
 function initializeReveal() {
   const revealItems = document.querySelectorAll(".reveal");
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-    return;
-  }
-
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -268,16 +408,74 @@ function initializeReveal() {
       });
     },
     {
-      threshold: 0.15,
-      rootMargin: "0px 0px -40px 0px",
+      threshold: 0.24,
+      rootMargin: "0px 0px -12% 0px",
     }
   );
 
   revealItems.forEach((item) => observer.observe(item));
 }
 
+function initializeGsapMotion() {
+  if (!hasGsapMotion()) {
+    return false;
+  }
+
+  const { gsap, ScrollTrigger } = window;
+  const revealStagger = motionPreferenceQuery.matches ? 0.04 : 0.12;
+  const heroStagger = motionPreferenceQuery.matches ? 0.05 : 0.11;
+  const initialGroups = document.querySelectorAll(".hero-section, .page-intro");
+  const scrollGroups = document.querySelectorAll(
+    ".proof-strip, .featured-section, .tools-section, .case-study-list, .email-gallery-section, .detail-grid, .photo-section, .contact-grid"
+  );
+
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({
+    ignoreMobileResize: true,
+  });
+
+  const staggerReveal = (items, step) => {
+    items.forEach((item, index) => {
+      gsap.delayedCall(index * step, () => {
+        item.classList.add("is-visible");
+      });
+    });
+  };
+
+  initialGroups.forEach((group) => {
+    const items = group.querySelectorAll(".reveal");
+
+    if (!items.length) {
+      return;
+    }
+
+    staggerReveal(items, heroStagger);
+  });
+
+  scrollGroups.forEach((group) => {
+    const items = group.querySelectorAll(".reveal");
+
+    if (!items.length) {
+      return;
+    }
+
+    ScrollTrigger.create({
+      trigger: group,
+      start: "top 78%",
+      once: true,
+      onEnter: () => {
+        staggerReveal(items, revealStagger);
+      },
+    });
+  });
+
+  ScrollTrigger.refresh();
+
+  return true;
+}
+
 function initializeTilt() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (motionPreferenceQuery.matches) {
     return;
   }
 
@@ -309,10 +507,6 @@ function initializeTilt() {
 }
 
 function initializeMediaParallax() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    return;
-  }
-
   const motionTargets = document.querySelectorAll(
     ".hero-focus-image, .hero-primary-image, .hero-mini-image, .project-image, .case-hero-image, .case-layout-image, .photo-card img"
   );
@@ -325,6 +519,8 @@ function initializeMediaParallax() {
 
   const updateMotion = () => {
     const viewportCenter = window.innerHeight / 2;
+    const maxShift = motionPreferenceQuery.matches ? 10 : 28;
+    const shiftStrength = motionPreferenceQuery.matches ? -10 : -22;
 
     motionTargets.forEach((target) => {
       const rect = target.getBoundingClientRect();
@@ -335,7 +531,7 @@ function initializeMediaParallax() {
 
       const elementCenter = rect.top + rect.height / 2;
       const distance = (elementCenter - viewportCenter) / viewportCenter;
-      const shift = Math.max(-14, Math.min(14, distance * -10));
+      const shift = Math.max(-maxShift, Math.min(maxShift, distance * shiftStrength));
 
       target.style.setProperty("--media-shift", `${shift.toFixed(2)}px`);
     });
@@ -379,8 +575,12 @@ if (yearNode) {
 initializeArchiveLightbox();
 initializeLanguage();
 initializeHeaderState();
+initializeScrollMeter();
 initializePointerAura();
 initializeRevealSequence();
-initializeReveal();
+if (!initializeGsapMotion()) {
+  initializeReveal();
+}
 initializeTilt();
 initializeMediaParallax();
+initializeMediaIntegrity();
