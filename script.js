@@ -453,9 +453,6 @@ function initializeGsapMotion() {
   const heroStagger = motionPreferenceQuery.matches ? 0.05 : 0.11;
   const editorialDistance = motionPreferenceQuery.matches ? 26 : 54;
   const initialGroups = document.querySelectorAll(".hero-section, .page-intro");
-  const scrollGroups = document.querySelectorAll(
-    ".proof-strip, .featured-section, .tools-section, .case-study-list, .email-gallery-section, .detail-grid, .photo-section, .contact-grid"
-  );
   const editorialGroups = [
     { trigger: document.querySelector(".page-intro"), targets: ".section-kicker, .page-title, .page-intro-text" },
     { trigger: document.querySelector(".featured-section"), targets: ".section-head > *" },
@@ -488,22 +485,24 @@ function initializeGsapMotion() {
     staggerReveal(items, heroStagger);
   });
 
-  scrollGroups.forEach((group) => {
-    const items = group.querySelectorAll(".reveal");
+  const revealedByHero = new Set();
+  initialGroups.forEach((group) => {
+    group.querySelectorAll(".reveal").forEach((node) => revealedByHero.add(node));
+  });
 
-    if (!items.length) {
-      return;
-    }
+  const scrollRevealItems = Array.from(document.querySelectorAll(".reveal")).filter(
+    (node) => !revealedByHero.has(node)
+  );
 
-    ScrollTrigger.create({
-      trigger: group,
-      start: "top 78%",
+  if (scrollRevealItems.length) {
+    ScrollTrigger.batch(scrollRevealItems, {
+      start: "top 86%",
       once: true,
-      onEnter: () => {
-        staggerReveal(items, revealStagger);
+      onEnter: (batch) => {
+        staggerReveal(batch, revealStagger);
       },
     });
-  });
+  }
 
   editorialGroups.forEach((config) => {
     if (!config.trigger) {
