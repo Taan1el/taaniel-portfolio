@@ -14,14 +14,30 @@ const archiveLightboxImage = document.getElementById("archive-lightbox-image");
 const archiveLightboxCaption = document.getElementById("archive-lightbox-caption");
 const archiveLightboxClose = document.getElementById("archive-lightbox-close");
 const archiveLightboxBackdrop = document.getElementById("archive-lightbox-backdrop");
-const langStorageKey = content.site.localStorageKey;
-const defaultLang = content.site.defaultLang;
-const fiizyArchiveItems = content.pages?.work?.archiveItems ?? [];
+const langStorageKey = content?.site?.localStorageKey ?? "lang";
+const defaultLang = content?.site?.defaultLang ?? "et";
+const fiizyArchiveItems = content?.pages?.work?.archiveItems ?? [];
 const motionPreferenceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 let fiizyArchiveRenderToken = 0;
 let activeLang = defaultLang;
 let scrollMeter = null;
 let scrollMeterValue = null;
+
+function safeStorageGet(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeStorageSet(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Ignore storage failures (private mode, blocked storage, etc.)
+  }
+}
 
 function hasGsapMotion() {
   return typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
@@ -42,6 +58,10 @@ function getLocalized(path, lang) {
 }
 
 function applyMeta(lang) {
+  if (!content?.pages?.[currentPage]) {
+    return;
+  }
+
   const pageContent = content.pages[currentPage];
 
   if (!pageContent?.meta) {
@@ -107,11 +127,11 @@ function applyLanguage(lang) {
     });
   }
 
-  localStorage.setItem(langStorageKey, lang);
+  safeStorageSet(langStorageKey, lang);
 }
 
 function resolveInitialLanguage() {
-  const savedLang = localStorage.getItem(langStorageKey);
+  const savedLang = safeStorageGet(langStorageKey);
 
   if (savedLang === "et" || savedLang === "en") {
     return savedLang;
@@ -335,6 +355,13 @@ function initializeMediaIntegrity() {
   );
 
   const handleFailure = (image) => {
+    const photoCard = image.closest(".photo-card");
+    if (photoCard) {
+      photoCard.hidden = true;
+      photoCard.classList.add("has-missing-media");
+      return;
+    }
+
     image.hidden = true;
     image.classList.add("is-missing-media");
     image.removeAttribute("alt");
@@ -530,16 +557,10 @@ function initializeGsapMotion() {
     const photoTrack = photoSection?.querySelector(".photo-grid");
 
     if (homeProjectGrid) {
-      const cards = homeProjectGrid.querySelectorAll(".project-card");
+      const cards = Array.from(homeProjectGrid.querySelectorAll(".project-card"));
+      const cardTweens = [];
 
       homeProjectGrid.classList.add("is-stack-layout");
-      cleanup.push(() => {
-        homeProjectGrid.classList.remove("is-stack-layout");
-        cards.forEach((card) => {
-          card.style.removeProperty("filter");
-          card.style.removeProperty("opacity");
-        });
-      });
 
       cards.forEach((card, index) => {
         const nextCard = cards[index + 1];
@@ -548,7 +569,7 @@ function initializeGsapMotion() {
           return;
         }
 
-        gsap.to(card, {
+        const tween = gsap.to(card, {
           scale: 0.93,
           y: -48,
           opacity: 0.54,
@@ -558,13 +579,23 @@ function initializeGsapMotion() {
             start: "top 78%",
             end: "top 18%",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         });
+
+        cardTweens.push(tween);
+      });
+
+      cleanup.push(() => {
+        homeProjectGrid.classList.remove("is-stack-layout");
+        cardTweens.forEach((tween) => tween.scrollTrigger?.kill(true));
+        cardTweens.forEach((tween) => tween.kill());
       });
     }
 
     if (photoSection && photoTrack) {
       const photoStage = photoSection.querySelector(".photo-gallery-stage");
+      const siteHeader = document.querySelector(".site-header");
 
       if (!photoStage) {
         return () => {
@@ -576,30 +607,71 @@ function initializeGsapMotion() {
       photoStage.classList.add("is-horizontal-gallery");
       photoTrack.classList.add("is-horizontal-gallery");
 
+      const getHeaderOffset = () => Math.round(siteHeader?.getBoundingClientRect().height || 104);
+      const syncPhotoOffset = () => {
+        photoStage.style.setProperty("--photo-gallery-offset", `${getHeaderOffset()}px`);
+      };
+
+      syncPhotoOffset();
+
       cleanup.push(() => {
         photoSection.classList.remove("is-horizontal-gallery");
         photoStage.classList.remove("is-horizontal-gallery");
         photoTrack.classList.remove("is-horizontal-gallery");
+        photoStage.style.removeProperty("--photo-gallery-offset");
         photoTrack.style.removeProperty("transform");
       });
 
       const getTravel = () => Math.max(0, photoTrack.scrollWidth - photoStage.clientWidth);
+      let galleryTrigger = null;
 
-      if (getTravel() > 0) {
-        gsap.to(photoTrack, {
-          x: () => -getTravel(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: photoStage,
-            start: "top center",
-            end: () => `+=${getTravel() + window.innerWidth * 0.45}`,
-            pin: photoStage,
-            scrub: 1,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
+      const syncGalleryTrigger = () => {
+        const travel = getTravel();
+
+        if (travel <= 0) {
+          if (galleryTrigger) {
+            galleryTrigger.kill(true);
+            galleryTrigger = null;
+          }
+
+          photoTrack.style.removeProperty("transform");
+          return;
+        }
+
+        if (galleryTrigger) {
+          return;
+        }
+
+        galleryTrigger = ScrollTrigger.create({
+          trigger: photoStage,
+          start: () => `top top+=${getHeaderOffset()}`,
+          end: () => `+=${getTravel() + window.innerWidth * 0.45}`,
+          pin: photoStage,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onRefreshInit: syncPhotoOffset,
+          onUpdate: (self) => {
+            photoTrack.style.transform = `translate3d(${(-getTravel() * self.progress).toFixed(2)}px, 0, 0)`;
+          },
+          onRefresh: () => {
+            // When images finish loading, scrollWidth changes; re-sync next frame.
+            window.requestAnimationFrame(syncGalleryTrigger);
           },
         });
-      }
+      };
+
+      syncGalleryTrigger();
+
+      ScrollTrigger.addEventListener("refreshInit", syncGalleryTrigger);
+      window.addEventListener("load", syncGalleryTrigger, { once: true });
+
+      cleanup.push(() => {
+        ScrollTrigger.removeEventListener("refreshInit", syncGalleryTrigger);
+        window.removeEventListener("load", syncGalleryTrigger);
+        galleryTrigger?.kill(true);
+        galleryTrigger = null;
+      });
     }
 
     return () => {
