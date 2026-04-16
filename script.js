@@ -551,44 +551,78 @@ function initializeGsapMotion() {
 
   gsap.matchMedia().add("(min-width: 961px)", () => {
     const cleanup = [];
-    const homeProjectGrid = document.querySelector(".page-home .project-grid");
+    const homeFeaturedSection = document.querySelector(".page-home .featured-section");
+    const homeProjectStage = homeFeaturedSection?.querySelector(".project-gallery-stage");
+    const homeProjectGrid = homeFeaturedSection?.querySelector(".project-grid");
     const photoSection = document.querySelector(".page-about .photo-section");
     const photoTrack = photoSection?.querySelector(".photo-grid");
 
-    if (homeProjectGrid) {
-      const cards = Array.from(homeProjectGrid.querySelectorAll(".project-card"));
-      const cardTweens = [];
+    if (homeFeaturedSection && homeProjectStage && homeProjectGrid) {
+      const siteHeader = document.querySelector(".site-header");
+      const getHeaderOffset = () => Math.round(siteHeader?.getBoundingClientRect().height || 104);
+      const syncStageOffset = () => {
+        homeProjectStage.style.setProperty("--project-gallery-offset", `${getHeaderOffset()}px`);
+      };
 
-      homeProjectGrid.classList.add("is-stack-layout");
+      syncStageOffset();
 
-      cards.forEach((card, index) => {
-        const nextCard = cards[index + 1];
+      homeFeaturedSection.classList.add("is-horizontal-project-gallery");
+      homeProjectStage.classList.add("is-horizontal-project-gallery");
+      homeProjectGrid.classList.add("is-horizontal-project-gallery");
 
-        if (!nextCard) {
+      cleanup.push(() => {
+        homeFeaturedSection.classList.remove("is-horizontal-project-gallery");
+        homeProjectStage.classList.remove("is-horizontal-project-gallery");
+        homeProjectGrid.classList.remove("is-horizontal-project-gallery");
+        homeProjectStage.style.removeProperty("--project-gallery-offset");
+        homeProjectGrid.style.removeProperty("transform");
+      });
+
+      const getTravel = () => Math.max(0, homeProjectGrid.scrollWidth - homeProjectStage.clientWidth);
+      let galleryTrigger = null;
+
+      const syncGalleryTrigger = () => {
+        const travel = getTravel();
+
+        if (travel <= 0) {
+          galleryTrigger?.kill(true);
+          galleryTrigger = null;
+          homeProjectGrid.style.removeProperty("transform");
           return;
         }
 
-        const tween = gsap.to(card, {
-          scale: 0.93,
-          y: -48,
-          opacity: 0.54,
-          ease: "none",
-          scrollTrigger: {
-            trigger: nextCard,
-            start: "top 78%",
-            end: "top 18%",
-            scrub: true,
-            invalidateOnRefresh: true,
+        if (galleryTrigger) {
+          return;
+        }
+
+        galleryTrigger = ScrollTrigger.create({
+          trigger: homeProjectStage,
+          start: () => `top top+=${getHeaderOffset()}`,
+          end: () => `+=${getTravel() + window.innerWidth * 0.55}`,
+          pin: homeProjectStage,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onRefreshInit: syncStageOffset,
+          onUpdate: (self) => {
+            homeProjectGrid.style.transform = `translate3d(${(-getTravel() * self.progress).toFixed(2)}px, 0, 0)`;
+          },
+          onRefresh: () => {
+            window.requestAnimationFrame(syncGalleryTrigger);
           },
         });
+      };
 
-        cardTweens.push(tween);
-      });
+      syncGalleryTrigger();
+
+      ScrollTrigger.addEventListener("refreshInit", syncGalleryTrigger);
+      window.addEventListener("load", syncGalleryTrigger, { once: true });
 
       cleanup.push(() => {
-        homeProjectGrid.classList.remove("is-stack-layout");
-        cardTweens.forEach((tween) => tween.scrollTrigger?.kill(true));
-        cardTweens.forEach((tween) => tween.kill());
+        ScrollTrigger.removeEventListener("refreshInit", syncGalleryTrigger);
+        window.removeEventListener("load", syncGalleryTrigger);
+        galleryTrigger?.kill(true);
+        galleryTrigger = null;
       });
     }
 
@@ -756,7 +790,10 @@ function initializeTilt() {
   );
 
   tiltTargets.forEach((target) => {
-    if (target.matches(".project-card") && target.closest(".project-grid.is-stack-layout")) {
+    if (
+      target.matches(".project-card") &&
+      (target.closest(".project-grid.is-stack-layout") || target.closest(".project-grid.is-horizontal-project-gallery"))
+    ) {
       return;
     }
 
