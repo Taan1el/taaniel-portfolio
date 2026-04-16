@@ -39,8 +39,8 @@ window.PORTFOLIO_CONTENT = {
           en: "Taaniel Vananurm | Portfolio",
         },
         description: {
-          et: "Taaniel Vananurme kakskeelne portfoolio: landing page'id, veebilehed ja br\u00e4ndivisuaalid.",
-          en: "Bilingual portfolio for Taaniel Vananurm: landing pages, websites, and brand visuals.",
+          et: "Tallinnas tegutseva Taaniel Vananurme kakskeelne portfoolio: landing page'id, kampaanialehed ja br\u00e4ndivisuaalid.",
+          en: "Bilingual portfolio of Tallinn-based Taaniel Vananurm: landing pages, campaign websites, and brand visuals.",
         },
       },
       label: {
@@ -56,8 +56,8 @@ window.PORTFOLIO_CONTENT = {
         en: "Approach",
       },
       heroNote: {
-        et: "Selge visuaalne hierarhia, puhas front-end ja detailid, mis hoiavad t\u00f6\u00f6 terava ning professionaalse.",
-        en: "Clear visual hierarchy, clean front-end, and details that keep the work sharp and professional.",
+        et: "Mulle sobib t\u00f6\u00f6, kus eesm\u00e4rk on selge: mis peab kohe silma j\u00e4\u00e4ma, kuhu peab klikk minema ja mis peab m\u00f5juma usaldusv\u00e4\u00e4rselt.",
+        en: "I like work where the goal is clear: what needs to stand out first, where the click should go, and what has to feel trustworthy right away.",
       },
       heroShowcaseLabel: {
         et: "Fiizy praktika",
@@ -75,39 +75,51 @@ window.PORTFOLIO_CONTENT = {
         et: "Erksav\u00e4rviline kampaaniahero, kus laenupakkumine, tegelaskuju ja CTA on koondatud \u00fchte puhtasse kompositsiooni.",
         en: "A colorful campaign hero where the offer, character, and CTA are combined into one clean composition.",
       },
+      motionChipOne: {
+        et: "ET / EN",
+        en: "ET / EN",
+      },
+      motionChipTwo: {
+        et: "Landing page'id",
+        en: "Landing pages",
+      },
+      motionChipThree: {
+        et: "Front-end build",
+        en: "Front-end build",
+      },
       introHtml: {
-        et: "Teen <span class=\"copy-highlight\">landing page'e</span>, <span class=\"copy-highlight\">veebilehti</span> ja visuaale, mis liiguvad kiiresti ideest koodini. Praegu \u00f5pin <span class=\"copy-highlight\">Tallinna Pol\u00fctehnikumis</span> ja t\u00f6\u00f6tan praktikal <span class=\"copy-highlight\">Fiizy O\u00dc-s</span>.",
-        en: "I build <span class=\"copy-highlight\">landing pages</span>, <span class=\"copy-highlight\">websites</span>, and visuals that move quickly from idea to code. Right now I'm studying at <span class=\"copy-highlight\">Tallinn Polytechnic</span> and working as an intern at <span class=\"copy-highlight\">Fiizy O\u00dc</span>.",
+        et: "Teen peamiselt <span class=\"copy-highlight\">landing page'e</span>, <span class=\"copy-highlight\">kampaanialehti</span> ja <span class=\"copy-highlight\">br\u00e4ndivisuaale</span>. Asun <span class=\"copy-highlight\">Tallinnas, Eestis</span>, \u00f5pin <span class=\"copy-highlight\">Tallinna Pol\u00fctehnikumis</span> ja teen praktikat <span class=\"copy-highlight\">Fiizy O\u00dc-s</span>. Mulle meeldivad lehed, kus s\u00f5num j\u00f5uab kohe kohale.",
+        en: "I mostly build <span class=\"copy-highlight\">landing pages</span>, <span class=\"copy-highlight\">campaign websites</span>, and <span class=\"copy-highlight\">brand visuals</span>. I'm based in <span class=\"copy-highlight\">Tallinn, Estonia</span>, studying at <span class=\"copy-highlight\">Tallinn Polytechnic</span>, and doing my internship at <span class=\"copy-highlight\">Fiizy O\u00dc</span>. I like pages where the message lands immediately.",
       },
       proof: [
         {
           label: {
-            et: "Praegu",
-            en: "Currently",
+            et: "Asukoht",
+            en: "Location",
           },
           text: {
-            et: "\u00d5pin Tallinna Pol\u00fctehnikumis.",
-            en: "Studying at Tallinn Polytechnic.",
+            et: "Tallinn, Eesti. Teen t\u00f6\u00f6d kohapeal ja remote.",
+            en: "Tallinn, Estonia. Available locally and remotely.",
           },
         },
         {
           label: {
-            et: "Praktika",
-            en: "Internship",
+            et: "Mida teen",
+            en: "What I build",
           },
           text: {
-            et: "T\u00f6\u00f6tan tiimis Fiizy O\u00dc-s.",
-            en: "Working in a team at Fiizy O\u00dc.",
+            et: "Landing page'id, kampaanialehed, e-maili visuaalid ja front-end teostus.",
+            en: "Landing pages, campaign sites, email visuals, and front-end implementation.",
           },
         },
         {
           label: {
-            et: "Fookus",
-            en: "Focus",
+            et: "T\u00f6\u00f6stiil",
+            en: "Work style",
           },
           text: {
-            et: "Landing page'id, veebilehed ja br\u00e4ndivisuaalid.",
-            en: "Landing pages, websites, and brand visuals.",
+            et: "Alustan sisust ja eesm\u00e4rgist, siis liigun kiiresti Figma'st koodi.",
+            en: "I start from the message and goal, then move from Figma to code without dragging it out.",
           },
         },
       ],
@@ -165,8 +177,8 @@ window.PORTFOLIO_CONTENT = {
               en: "Front-end execution",
             },
             text: {
-              et: "Puhas HTML, CSS ja JavaScript, et disain j\u00f5uaks kiiresti t\u00f6\u00f6tava tulemuseni.",
-              en: "Clean HTML, CSS, and JavaScript so the design reaches a working result quickly.",
+              et: "Puhas HTML, CSS, JavaScript ja GSAP, kui leht vajab sujuvat liikumist ja tugevamat r\u00fctmi.",
+              en: "Clean HTML, CSS, JavaScript, and GSAP when a page needs smoother motion and a stronger rhythm.",
             },
           },
         },
@@ -179,8 +191,8 @@ window.PORTFOLIO_CONTENT = {
           en: "Taaniel Vananurm | Work",
         },
         description: {
-          et: "Valitud e-maili kampaaniad ja hero-visuaalid Taaniel Vananurme portfoolios.",
-          en: "Selected email campaigns and hero visuals in the Taaniel Vananurm portfolio.",
+          et: "Tallinnas tegutseva Taaniel Vananurme valitud kampaaniahero'd, e-maili visuaalid ja praktikaprojektid.",
+          en: "Selected campaign heroes, email visuals, and internship projects by Tallinn-based Taaniel Vananurm.",
         },
       },
       label: {
@@ -188,12 +200,12 @@ window.PORTFOLIO_CONTENT = {
         en: "Selected work",
       },
       title: {
-        et: "Viimased projektid praktikast ja tiimit\u00f6\u00f6st.",
-        en: "Recent work from internship and team projects.",
+        et: "Praktikal tehtud kampaaniad ja e-maili visuaalid.",
+        en: "Campaign and email work I made during my internship.",
       },
       intro: {
-        et: "Kolm viimast e-maili kampaaniat ja hero-visuaali, mille kallal olen tiimis t\u00f6\u00f6tanud.",
-        en: "Three recent email campaigns and hero visuals I worked on as part of a team.",
+        et: "Need on p\u00e4ris t\u00f6\u00f6d praktikast. Iga projekti juures tegelesin hero-visuaali, layout'i v\u00f5i kampaanias\u00f5numi selgemaks tegemisega.",
+        en: "These are real pieces from my internship. On each one I worked on making the hero visual, layout, or campaign message clearer.",
       },
       roleLabel: {
         et: "Roll",
@@ -244,9 +256,6 @@ window.PORTFOLIO_CONTENT = {
         en: "Close image viewer",
       },
       archiveItems: [
-        "assets/heros/cozmo.png",
-        "assets/heros/Cozmo_2605.jpg",
-        "assets/heros/Cozmo_v1.png",
         "assets/heros/Cozmo_v3.png",
         "assets/heros/Credito365.png",
         "assets/heros/Credito365_2605.jpg",
@@ -254,25 +263,17 @@ window.PORTFOLIO_CONTENT = {
         "assets/heros/credito365_v1.png",
         "assets/heros/Dineromon.png",
         "assets/heros/Dineromon_2605.jpg",
-        "assets/heros/Dineromon_Hero.jpeg",
         "assets/heros/dineromon_summer_v1.png",
         "assets/heros/Slana.png",
         "assets/heros/Slana_MX_2606.jpg",
-        "assets/heros/Slana_v1.png",
         "assets/heros/Solcredito_AFF_2605.jpg",
-        "assets/heros/Solcredito_AFF_Hero.jpg",
         "assets/heros/Solcredito_REM_2605.jpg",
-        "assets/heros/Solcredito_REM_Hero.jpg",
         "assets/heros/SolcreditoAFF.jpg",
-        "assets/heros/SolcreditoAFF_v1.png",
-        "assets/heros/SolcreditoAFF_v2.png",
         "assets/heros/SolcreditoREM.png",
         "assets/heros/SolcreditoREM_v1.png",
         "assets/heros/Vivus.png",
         "assets/heros/Vivus_2605.jpg",
-        "assets/heros/Vivus_om_mx_Hero.png",
-        "assets/heros/vivus_v1.png",
-        "assets/heros/vivus_v2.png"
+        "assets/heros/Vivus_om_mx_Hero.png"
       ],
     },
     about: {
@@ -282,8 +283,8 @@ window.PORTFOLIO_CONTENT = {
           en: "Taaniel Vananurm | About",
         },
         description: {
-          et: "Veebidisaineri ja arendaja taust, t\u00f6\u00f6stiil ja fotograafia Taaniel Vananurme portfoolios.",
-          en: "Background, working style, and photography in the Taaniel Vananurm portfolio.",
+          et: "Tallinnas tegutseva veebidisaineri ja arendaja taust, t\u00f6\u00f6stiil ja fotograafia Taaniel Vananurme portfoolios.",
+          en: "Background, working style, and photography in the portfolio of Tallinn-based web designer and developer Taaniel Vananurm.",
         },
       },
       label: {
@@ -291,12 +292,12 @@ window.PORTFOLIO_CONTENT = {
         en: "About",
       },
       title: {
-        et: "Selge disain, tugev hierarhia ja kiire teostus.",
-        en: "Clear design, strong hierarchy, and fast execution.",
+        et: "Teen kampaanialehti ja visuaale, mis ei aja asja keeruliseks.",
+        en: "I make campaign pages and visuals that don't overcomplicate the job.",
       },
       introHtml: {
-        et: "Olen veebidisainer ja arendaja, kes teeb <span class=\"copy-highlight\">landing page'e</span>, <span class=\"copy-highlight\">veebilehti</span> ja <span class=\"copy-highlight\">br\u00e4ndivisuaale</span> ideest kuni koodini. \u00d5pin <span class=\"copy-highlight\">Tallinna Pol\u00fctehnikumis</span> ning teen praktikat <span class=\"copy-highlight\">Fiizy O\u00dc-s</span>, kus t\u00f6\u00f6tan tiimis turundus- ja e-maili visuaalide kallal.",
-        en: "I'm a web designer and developer creating <span class=\"copy-highlight\">landing pages</span>, <span class=\"copy-highlight\">websites</span>, and <span class=\"copy-highlight\">brand visuals</span> from idea to code. I'm studying at <span class=\"copy-highlight\">Tallinn Polytechnic</span> and doing my internship at <span class=\"copy-highlight\">Fiizy O\u00dc</span>, where I work on marketing and email visuals in a team.",
+        et: "Olen <span class=\"copy-highlight\">Tallinnas tegutsev</span> veebidisainer ja arendaja. Teen <span class=\"copy-highlight\">landing page'e</span>, <span class=\"copy-highlight\">kampaanialehti</span> ja <span class=\"copy-highlight\">br\u00e4ndivisuaale</span> ideest kuni koodini. Praegu \u00f5pin <span class=\"copy-highlight\">Tallinna Pol\u00fctehnikumis</span> ja teen praktikat <span class=\"copy-highlight\">Fiizy O\u00dc-s</span>, kus olen peamiselt turundus- ja e-maili visuaalide juures.",
+        en: "I'm a <span class=\"copy-highlight\">Tallinn-based</span> web designer and developer. I build <span class=\"copy-highlight\">landing pages</span>, <span class=\"copy-highlight\">campaign sites</span>, and <span class=\"copy-highlight\">brand visuals</span> from idea to code. Right now I'm studying at <span class=\"copy-highlight\">Tallinn Polytechnic</span> and interning at <span class=\"copy-highlight\">Fiizy O\u00dc</span>, mostly working on marketing and email visuals.",
       },
       details: {
         focusLabel: {
@@ -304,16 +305,32 @@ window.PORTFOLIO_CONTENT = {
           en: "What I do",
         },
         focusText: {
-          et: "Disainin ja ehitan landing page'e, veebilehti ja kampaaniavisuaale, kus s\u00f5num peab olema kohe loetav ja usaldusv\u00e4\u00e4rne.",
-          en: "I design and build landing pages, websites, and campaign visuals where the message needs to be immediate and credible.",
+          et: "Enamasti teen maandumislehti, kampaanialehti, lihtsamaid veebilehti ja e-maili visuaale. T\u00f6\u00f6d, kus peab kiiresti selgeks saama, mis on pakkumine ja kuhu klikk l\u00e4heb.",
+          en: "Most of my work is landing pages, campaign sites, smaller websites, and email visuals. The kind of work where the offer has to be obvious fast and the click path has to make sense.",
         },
         approachLabel: {
           et: "Kuidas ma t\u00f6\u00f6tan",
           en: "How I work",
         },
         approachText: {
-          et: "Alustan eesm\u00e4rgist, hoian kompositsiooni puhta ning viin disaini kiiresti koodi.",
-          en: "I start from the goal, keep the composition clean, and move the design into code quickly.",
+          et: "Ma ei alusta efektidest. Esmalt vaatan \u00fcle s\u00f5numi, hierarhia ja CTA. Kui see toimib, siis liigun visuaali ja koodi juurde.",
+          en: "I don't start from effects. I start with the message, hierarchy, and CTA. If that works, then I push the visual and code side.",
+        },
+        locationLabel: {
+          et: "Kus ma tegutsen",
+          en: "Where I work",
+        },
+        locationText: {
+          et: "Asun Tallinnas, Eestis. Olen avatud kohalikele projektidele, praktikatele ja remote koost\u00f6\u00f6le.",
+          en: "I'm based in Tallinn, Estonia. Open to local projects, internships, and remote collaboration.",
+        },
+        fitLabel: {
+          et: "Milleks ma sobin",
+          en: "Best fit",
+        },
+        fitText: {
+          et: "Kui on vaja noort disainer-arendajat, kes saab aru kampaanialehe loogikast ja j\u00f5uab Figma'st reaalse tulemuseni.",
+          en: "A good fit if you need a junior designer-developer who understands campaign-page logic and can turn a Figma direction into something real.",
         },
       },
       photoSection: {
@@ -322,12 +339,12 @@ window.PORTFOLIO_CONTENT = {
           en: "Photography",
         },
         title: {
-          et: "Fotograafia aitab mul n\u00e4ha valgust, r\u00fctmi ja kompositsiooni ka veebis.",
-          en: "Photography helps me see light, rhythm, and composition in web work too.",
+          et: "Pildistan ka. See hoiab silma teravana ka veebit\u00f6\u00f6 jaoks.",
+          en: "I shoot photos too. It keeps my eye sharp for web work.",
         },
         text: {
-          et: "Lisaks veebile teen ka fotosid. See hoiab mu pilgu v\u00e4rskena ja m\u00f5jutab otseselt seda, kuidas ma m\u00f5tlen pildi, ruumi ja fookuse peale.",
-          en: "Outside web work I also shoot photography. It keeps my eye sharp and directly shapes how I think about image, space, and focus.",
+          et: "Kui olen liiga kaua ekraanis olnud, aitab kaamera pea uuesti selgeks teha. Sealt tuleb ka see, kuidas ma m\u00f5tlen valguse, fookuse ja kompositsiooni peale.",
+          en: "If I've been staring at screens too long, picking up a camera resets my head. A lot of how I think about light, focus, and composition comes from that.",
         },
         visit: {
           et: "Vaata Unsplashi",
@@ -342,8 +359,8 @@ window.PORTFOLIO_CONTENT = {
           en: "Taaniel Vananurm | Contact",
         },
         description: {
-          et: "Taaniel Vananurme kontaktid ja sotsiaalprofiilid.",
-          en: "Contact details and social profiles for Taaniel Vananurm.",
+          et: "Tallinnas tegutseva Taaniel Vananurme kontaktid, asukoht ja sotsiaalprofiilid.",
+          en: "Contact details, location, and social profiles for Tallinn-based Taaniel Vananurm.",
         },
       },
       label: {
@@ -355,16 +372,16 @@ window.PORTFOLIO_CONTENT = {
         en: "Get in touch.",
       },
       intro: {
-        et: "Kirjuta mulle e-mail v\u00f5i helista. Vastan kiiresti.",
-        en: "Email or call me. I reply fast.",
+        et: "Asun Tallinnas. K\u00f5ige lihtsam on kirjutada e-mailile, aga v\u00f5id ka helistada.",
+        en: "I'm based in Tallinn. Email is usually the easiest, but calling works too.",
       },
       availabilityLabel: {
-        et: "Fookus",
-        en: "Focus",
+        et: "Millega aidata saan",
+        en: "What I can help with",
       },
       availabilityText: {
-        et: "Landing page'id, veebilehed, br\u00e4ndivisuaalid ja puhas front-end teostus.",
-        en: "Landing pages, websites, brand visuals, and clean front-end implementation.",
+        et: "Landing page'id, kampaanialehed, hero-b\u00e4nnerid, e-maili visuaalid ja lihtsam front-end teostus.",
+        en: "Landing pages, campaign websites, hero banners, email visuals, and straightforward front-end implementation.",
       },
       emailLabel: {
         et: "E-mail",
@@ -377,6 +394,14 @@ window.PORTFOLIO_CONTENT = {
       socialLabel: {
         et: "Sotsiaalid",
         en: "Socials",
+      },
+      locationLabel: {
+        et: "Asukoht",
+        en: "Location",
+      },
+      locationText: {
+        et: "Tallinn, Eesti. Avatud kohalikele projektidele ja remote koost\u00f6\u00f6le.",
+        en: "Tallinn, Estonia. Open to local projects and remote collaboration.",
       },
     },
   },
