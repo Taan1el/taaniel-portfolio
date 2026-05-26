@@ -22,6 +22,7 @@ let fiizyArchiveRenderToken = 0;
 let activeLang = defaultLang;
 let scrollMeter = null;
 let scrollMeterValue = null;
+let archiveLightboxReturnFocus = null;
 
 function safeStorageGet(key) {
   try {
@@ -277,11 +278,13 @@ function openArchiveLightbox(src, label) {
     return;
   }
 
+  archiveLightboxReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   archiveLightboxImage.src = src;
   archiveLightboxImage.alt = label;
   archiveLightboxCaption.textContent = label;
   archiveLightbox.hidden = false;
   document.body.style.overflow = "hidden";
+  archiveLightboxClose?.focus();
 }
 
 function closeArchiveLightbox() {
@@ -294,6 +297,8 @@ function closeArchiveLightbox() {
   archiveLightboxImage.alt = "";
   archiveLightboxCaption.textContent = "";
   document.body.style.overflow = "";
+  archiveLightboxReturnFocus?.focus();
+  archiveLightboxReturnFocus = null;
 }
 
 function getArchiveDisplayName(src) {
