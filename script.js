@@ -428,6 +428,11 @@ function initializeRevealSequence() {
 function initializeReveal() {
   const revealItems = document.querySelectorAll(".reveal");
 
+  if (typeof IntersectionObserver === "undefined") {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
