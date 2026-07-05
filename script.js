@@ -324,8 +324,9 @@ function getArchiveDisplayName(src) {
     .join(" ");
 }
 
-function createArchiveCard(src) {
-  const label = getArchiveDisplayName(src);
+function createArchiveCard(item) {
+  const src = item.src;
+  const label = item.label || getArchiveDisplayName(src);
   const article = document.createElement("article");
   const button = document.createElement("button");
   const image = document.createElement("img");
@@ -394,8 +395,8 @@ function renderFiizyArchive(lang) {
 
   const renderToken = ++fiizyArchiveRenderToken;
   const visibleItems = fiizyArchiveItems
-    .map((src, itemIndex) => ({ src, index: itemIndex + 1 }))
-    .filter((item) => typeof item.src === "string" && item.src.length > 0);
+    .map((entry) => (typeof entry === "string" ? { src: entry } : entry))
+    .filter((item) => item && typeof item.src === "string" && item.src.length > 0);
 
   if (renderToken !== fiizyArchiveRenderToken) {
     return;
@@ -403,7 +404,7 @@ function renderFiizyArchive(lang) {
 
   fiizyArchiveGrid.innerHTML = "";
   visibleItems.forEach((item) => {
-    fiizyArchiveGrid.append(createArchiveCard(item.src));
+    fiizyArchiveGrid.append(createArchiveCard(item));
   });
 
   fiizyArchiveGrid.classList.toggle("has-items", visibleItems.length > 0);
