@@ -885,8 +885,19 @@ function initializeArchiveLightbox() {
   archiveLightboxBackdrop?.addEventListener("click", closeArchiveLightbox);
 
   window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !archiveLightbox.hidden) {
+    if (archiveLightbox.hidden) {
+      return;
+    }
+
+    if (event.key === "Escape") {
       closeArchiveLightbox();
+      return;
+    }
+
+    // Keep focus inside the dialog; the close button is its only focusable control.
+    if (event.key === "Tab") {
+      event.preventDefault();
+      archiveLightboxClose?.focus();
     }
   });
 }
