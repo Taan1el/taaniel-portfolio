@@ -8,6 +8,17 @@
       name="description"
       content="Valitud e-maili kampaaniad ja hero-visuaalid Taaniel Vananurme portfoolios."
     />
+    <link rel="canonical" href="https://taan1el.github.io/taaniel-portfolio/work.html" />
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Taaniel Vananurm | T&ouml;&ouml;d" />
+    <meta
+      property="og:description"
+      content="Valitud e-maili kampaaniad ja hero-visuaalid Taaniel Vananurme portfoolios."
+    />
+    <meta property="og:url" content="https://taan1el.github.io/taaniel-portfolio/work.html" />
+    <meta property="og:image" content="https://taan1el.github.io/taaniel-portfolio/assets/heros/Dineromon.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -111,6 +122,8 @@
               src="assets/heros/Credito365.png"
               alt="Hero-visuaal, kus on r&otilde;hutatud raha k&auml;ttesaamist 10 minutiga, CTA-nupp ja shoppingu kontekst."
               data-i18n-alt="projects.credito365.heroAlt"
+                loading="lazy"
+                decoding="async"
             />
 
             <div class="case-study-copy">
@@ -149,6 +162,8 @@
               src="assets/heros/Cozmo_v3.png"
               alt="Hero-visuaal maskotiga, lubadusega kuni 30 000 pesot ning mini-UI kaardiga summa ja perioodi kohta."
               data-i18n-alt="projects.cozmo.heroAlt"
+                loading="lazy"
+                decoding="async"
             />
 
             <div class="case-study-copy">
@@ -192,6 +207,8 @@
                 src="assets/Group 22.png"
                 alt="T&auml;ispikk DineroMon e-maili reklaami mockup: hero, jaotised, CTA-d ja juriidiline footer."
                 data-i18n-alt="projects.dineromon.emailAlt"
+                loading="lazy"
+                decoding="async"
               />
             </a>
           </article>
@@ -204,6 +221,8 @@
                 src="assets/Group 1.png"
                 alt="T&auml;ispikk Credito365 e-maili disain: hero, sisublokid, CTA-d ja footer."
                 data-i18n-alt="projects.credito365.emailAlt"
+                loading="lazy"
+                decoding="async"
               />
             </a>
           </article>
@@ -216,6 +235,8 @@
                 src="assets/Group 17.png"
                 alt="T&auml;ispikk Cozmo e-maili disain: hero, sisublokid, CTA-d ja footer."
                 data-i18n-alt="projects.cozmo.emailAlt"
+                loading="lazy"
+                decoding="async"
               />
             </a>
           </article>
@@ -226,14 +247,10 @@
         <div class="section-head section-head-lined reveal">
           <p class="section-kicker" data-i18n="pages.work.archiveLabel">Fiizy arhiiv</p>
           <h2 class="section-title archive-title" data-i18n="pages.work.archiveTitle">
-            Lisahero'd, mis toetavad p&otilde;hivalikut ilma seda &uuml;le kirjutamata.
+            Veel t&ouml;id Fiizy praktikast.
           </h2>
           <p class="section-note archive-note" data-i18n="pages.work.archiveText">
-            Sekundaarne galerii Fiizy kampaaniahero'dest. See j&auml;tab p&otilde;hit&ouml;&ouml;d
-            esiplaanile, aga annab soovi korral kiire &uuml;levaate suuremast mahust.
-          </p>
-          <p class="archive-helper" data-i18n="pages.work.archiveNote">
-            Arhiiv kasutab praegu pilte kaustast assets/heros/ ja hoiab need põhivalikust eraldi.
+            Laiem valik kampaaniavisuaale, mille kallal praktika ajal t&ouml;&ouml;tasin.
           </p>
         </div>
 
@@ -244,7 +261,14 @@
       </section>
     </main>
 
-    <div class="archive-lightbox" id="archive-lightbox" hidden>
+    <div
+      class="archive-lightbox"
+      id="archive-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="archive-lightbox-caption"
+      hidden
+    >
       <button
         class="archive-lightbox-close"
         type="button"
