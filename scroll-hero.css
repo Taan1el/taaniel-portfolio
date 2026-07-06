@@ -1,0 +1,125 @@
+/* Scroll-scrubbed hero — demo styles (layered on top of the site's style.css). */
+
+.scrollhero {
+  position: relative;
+  /* Scroll distance that the pinned sequence plays across. More = slower scrub. */
+  height: 320vh;
+}
+
+.scrollhero__stage {
+  position: relative;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #06070a;
+}
+
+.scrollhero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Legibility scrim so the headline reads over any frame. */
+.scrollhero__stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(6, 7, 10, 0.55) 0%, transparent 32%),
+    radial-gradient(circle at 30% 40%, transparent 40%, rgba(6, 7, 10, 0.62) 100%);
+}
+
+.scrollhero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0 clamp(1.5rem, 6vw, 6rem);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.scrollhero__overlay.is-visible {
+  opacity: 1;
+}
+
+.scrollhero__kicker {
+  font-family: var(--font-body, "Manrope", sans-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.78rem;
+  color: var(--accent, #d19773);
+  margin: 0;
+}
+
+.scrollhero__title {
+  font-family: var(--font-display, "Fraunces", serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  line-height: 1.02;
+  color: var(--text-strong, #fff9f3);
+  max-width: 16ch;
+  margin: 0;
+}
+
+.scrollhero__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 2.4rem;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body, "Manrope", sans-serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-strong, #d8cfc2);
+}
+
+.scrollhero__hint::after {
+  content: "";
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(180deg, var(--accent, #d19773), transparent);
+  animation: scrollhero-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollhero-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* A little content after the hero so pin release is visible while testing. */
+.scrollhero-after {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollhero {
+    height: 100vh;
+  }
+  .scrollhero__hint::after {
+    animation: none;
+  }
+}

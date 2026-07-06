@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Hero — demo</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="scroll-hero.css" />
+  </head>
+  <body class="page" data-page="scrollhero">
+    <main id="main">
+      <!-- Scroll-scrubbed hero -->
+      <section class="scrollhero" aria-label="Scroll hero preview">
+        <div class="scrollhero__stage">
+          <canvas
+            id="scrollhero-canvas"
+            class="scrollhero__canvas"
+            role="img"
+            aria-label="Fiizy kampaaniavisuaalide seeria, mis liigub kerimise järgi."
+          ></canvas>
+
+          <div class="scrollhero__overlay">
+            <p class="scrollhero__kicker">Fiizy praktika</p>
+            <h1 class="scrollhero__title">Kampaaniad, mis liiguvad kerimise järgi.</h1>
+          </div>
+
+          <p class="scrollhero__hint">Keri</p>
+        </div>
+      </section>
+
+      <!-- Content after the hero, so pin release is visible while testing. -->
+      <section class="scrollhero-after">
+        <p class="section-note">Siit algab tavaline lehe sisu.</p>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="scroll-hero.js"></script>
+  </body>
+</html>
